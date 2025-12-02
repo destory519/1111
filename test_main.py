@@ -5,7 +5,7 @@ Tests for the 1111 project.
 
 import unittest
 from io import StringIO
-import sys
+from contextlib import redirect_stdout
 from main import main
 
 
@@ -15,12 +15,8 @@ class TestMain(unittest.TestCase):
     def test_main_output(self):
         """Test that main() outputs '1111'."""
         captured_output = StringIO()
-        original_stdout = sys.stdout
-        try:
-            sys.stdout = captured_output
+        with redirect_stdout(captured_output):
             main()
-        finally:
-            sys.stdout = original_stdout
         self.assertEqual(captured_output.getvalue().strip(), "1111")
 
 
