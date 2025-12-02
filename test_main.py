@@ -15,9 +15,12 @@ class TestMain(unittest.TestCase):
     def test_main_output(self):
         """Test that main() outputs '1111'."""
         captured_output = StringIO()
-        sys.stdout = captured_output
-        main()
-        sys.stdout = sys.__stdout__
+        original_stdout = sys.stdout
+        try:
+            sys.stdout = captured_output
+            main()
+        finally:
+            sys.stdout = original_stdout
         self.assertEqual(captured_output.getvalue().strip(), "1111")
 
 
